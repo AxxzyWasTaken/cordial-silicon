@@ -1625,11 +1625,11 @@ public:
     jboolean cpu64Bit = true;
     jboolean isChrome = false;
     jboolean isLowRamDevice = false;
-    jint deviceTotalMemoryMB = 8192;
+    jint deviceTotalMemoryMB = 32768;
     jint displayPhysicalWidthPixels = 1280;
     jint displayPhysicalHeightPixels = 720;
-    jint largeMemoryClass = 512;
-    jint memoryClass = 256;
+    jint largeMemoryClass = 4096;
+    jint memoryClass = 2048;
     jlong lowMemoryKillerBackgroundAppThreshold = 0;
     jlong lowMemoryKillerForegroundAppThreshold = 0;
 
