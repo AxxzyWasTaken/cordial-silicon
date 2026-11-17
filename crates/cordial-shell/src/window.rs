@@ -154,7 +154,7 @@ fn starting_dialog_with(
     content.set_margin_start(36);
     content.set_margin_end(36);
 
-    let icon = gtk::Image::from_icon_name("io.github.luohoa97.Cordial");
+    let icon = gtk::Image::from_icon_name("io.github.AxxzyWasTaken.CordialSilicon");
     icon.set_pixel_size(72);
     content.append(&icon);
 
@@ -628,7 +628,7 @@ pub fn build(
                 .application_icon(cordial_shell::branding::current().icon())
                 .version(cordial_shell::version::full())
                 .developer_name("The Cordial contributors")
-                .website("https://github.com/luohoa97/cordial")
+                .website("https://github.com/AxxzyWasTaken/cordial-silicon")
                 .issue_url(ABOUT_REPORT_LINK)
                 // The Discord, under libadwaita's own "Support Questions"
                 // heading, because that is where support actually happens and

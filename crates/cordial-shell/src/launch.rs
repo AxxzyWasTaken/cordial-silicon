@@ -847,7 +847,7 @@ pub fn adb_install_hint() -> String {
     // would also need raw USB access (`--device=usb`), which the manifest
     // does not grant for a path nobody has run in the sandbox against a
     // headset, and `flatpak-spawn --host` is a sandbox escape it refuses
-    // outright (packaging/io.github.luohoa97.Cordial.yml). So the pull is two
+    // outright (packaging/io.github.AxxzyWasTaken.CordialSilicon.yml). So the pull is two
     // commands on the host, and the import is the file picker's.
     if in_flatpak() {
         return "Cordial's Flatpak has no adb and cannot run the one on your computer. In a terminal, with \
@@ -1147,7 +1147,7 @@ mod tests {
     /// GNOME 50 loads VulkanLayer 25.08; a runtime bump must revisit both.
     #[test]
     fn the_vulkan_layer_branch_follows_the_flatpak_runtime() {
-        let manifest = include_str!("../../../packaging/io.github.luohoa97.Cordial.yml");
+        let manifest = include_str!("../../../packaging/io.github.AxxzyWasTaken.CordialSilicon.yml");
         assert!(
             manifest.lines().any(|l| l.trim() == "runtime-version: '50'"),
             "the Flatpak runtime changed; update VULKAN_LAYER_BRANCH to the VulkanLayer \

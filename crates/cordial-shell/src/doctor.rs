@@ -38,7 +38,7 @@ use std::time::Duration;
 
 /// The desktop entry's id, which is also the application id. The binary's own
 /// `APP_ID` must equal it; `doctor_run.rs` tests that they do.
-pub const DESKTOP_ID: &str = "io.github.luohoa97.Cordial.desktop";
+pub const DESKTOP_ID: &str = "io.github.AxxzyWasTaken.CordialSilicon.desktop";
 
 /// How long the Vulkan probe gets. A healthy one answers in well under a
 /// second; a driver that is going to hang has done so long before this.
@@ -926,8 +926,8 @@ fn browser_handler() -> Check {
 
 fn handler_check(answer: Option<&str>) -> Check {
     const FIX: &str = "Installing Cordial from a package registers it. From a source build, copy \
-                       packaging/io.github.luohoa97.Cordial.desktop to ~/.local/share/applications/ and run \
-                       `xdg-mime default io.github.luohoa97.Cordial.desktop x-scheme-handler/roblox-player x-scheme-handler/roblox`.";
+                       packaging/io.github.AxxzyWasTaken.CordialSilicon.desktop to ~/.local/share/applications/ and run \
+                       `xdg-mime default io.github.AxxzyWasTaken.CordialSilicon.desktop x-scheme-handler/roblox-player x-scheme-handler/roblox`.";
     match answer {
         Some(a) if a == DESKTOP_ID => check(Level::Ok, "the website's Play button opens Cordial", ""),
         Some("") | None => check(Level::Warn, "nothing is registered for the website's Play button", FIX),

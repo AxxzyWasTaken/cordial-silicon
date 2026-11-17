@@ -90,7 +90,7 @@ use libadwaita::prelude::*;
 use std::cell::RefCell;
 use std::rc::Rc;
 
-/// Must match `packaging/io.github.luohoa97.Cordial.desktop`'s file name and
+/// Must match `packaging/io.github.AxxzyWasTaken.CordialSilicon.desktop`'s file name and
 /// `StartupWMClass`. GNOME Shell uses the application id to find the desktop
 /// entry for window-to-launcher matching; let the two drift and the taskbar
 /// icon and startup notification silently stop matching up rather than erroring.
@@ -100,7 +100,7 @@ use std::rc::Rc;
 /// registers on the session bus, and a second invocation carrying a URL hands
 /// that URL to the process already registered and exits, which is why clicking
 /// a link on a website wakes the launcher instead of starting a second one.
-const APP_ID: &str = "io.github.luohoa97.Cordial";
+const APP_ID: &str = "io.github.AxxzyWasTaken.CordialSilicon";
 
 fn main() -> libadwaita::glib::ExitCode {
     // **Answered before the `GApplication` exists, and that is the whole

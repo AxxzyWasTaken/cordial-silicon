@@ -81,8 +81,8 @@ on:
       - 'packaging/aur/cordial/**'
       - 'packaging/version.sh'
       - 'packaging/icons/**'
-      - 'packaging/io.github.luohoa97.Cordial.desktop'
-      - 'packaging/io.github.luohoa97.Cordial.metainfo.xml'
+      - 'packaging/io.github.AxxzyWasTaken.CordialSilicon.desktop'
+      - 'packaging/io.github.AxxzyWasTaken.CordialSilicon.metainfo.xml'
       - '.github/workflows/release.yml'
   pull_request:
     paths:
@@ -97,8 +97,8 @@ on:
       - 'packaging/aur/cordial/**'
       - 'packaging/version.sh'
       - 'packaging/icons/**'
-      - 'packaging/io.github.luohoa97.Cordial.desktop'
-      - 'packaging/io.github.luohoa97.Cordial.metainfo.xml'
+      - 'packaging/io.github.AxxzyWasTaken.CordialSilicon.desktop'
+      - 'packaging/io.github.AxxzyWasTaken.CordialSilicon.metainfo.xml'
       - '.github/workflows/release.yml'
   # **The way to start a release build by hand, and it is needed.** `paths`
   # above applies to tag pushes as well as branch pushes, and a tag pointing at
@@ -345,7 +345,7 @@ jobs:
         # the one validation this job is confident is installed, rather than
         # guess a package name and risk failing the whole job on tooling that
         # was never the point.
-        run: desktop-file-validate packaging/io.github.luohoa97.Cordial.desktop
+        run: desktop-file-validate packaging/io.github.AxxzyWasTaken.CordialSilicon.desktop
       - name: Build the .deb
         run: packaging/deb/build-deb.sh --outdir dist/deb
       - name: Refuse a binary that needs a newer glibc than the floor

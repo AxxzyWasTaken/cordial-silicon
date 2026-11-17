@@ -669,7 +669,7 @@ mod tests {
         let mut p = places(&root);
         // The app's own XDG_CONFIG_HOME, which has no OpenXR config, and the
         // user's ~/.config beside it, which does.
-        p.config_home = Some(root.join("home/.var/app/io.github.luohoa97.Cordial/config"));
+        p.config_home = Some(root.join("home/.var/app/io.github.AxxzyWasTaken.CordialSilicon/config"));
         library(&root.join("lib/w.so"));
         manifest(&root.join("home/.config/openxr/1/active_runtime.json"), "WiVRn", &root.join("lib/w.so").to_string_lossy());
         let users = root.join("home/.config/openxr/1/active_runtime.json");

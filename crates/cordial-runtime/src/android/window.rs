@@ -394,7 +394,7 @@ struct XSizeHints {
 }
 
 /// `WM_CLASS`, whose second element must match `StartupWMClass` in
-/// `packaging/io.github.luohoa97.Cordial.desktop`. A mismatch is invisible in normal
+/// `packaging/io.github.AxxzyWasTaken.CordialSilicon.desktop`. A mismatch is invisible in normal
 /// use and shows up as an unnamed window in OBS and portal capture pickers, and
 /// as a second unbranded taskbar entry. See ADR-009.
 const WM_RES_NAME: &str = "cordial";
@@ -2527,7 +2527,7 @@ mod tests {
         // exactly the kind of break nobody notices until a user reports it.
         // ADR-009 commits to this staying true, so it is checked rather than
         // asserted in prose.
-        let desktop = include_str!("../../../../packaging/io.github.luohoa97.Cordial.desktop");
+        let desktop = include_str!("../../../../packaging/io.github.AxxzyWasTaken.CordialSilicon.desktop");
         let declared = desktop
             .lines()
             .find_map(|l| l.strip_prefix("StartupWMClass="))

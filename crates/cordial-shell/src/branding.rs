@@ -45,7 +45,7 @@ impl Brand {
     /// The name the window, the about dialog and the task switcher use.
     pub fn name(self) -> &'static str {
         match self {
-            Brand::Cordial => "Cordial",
+            Brand::Cordial => "Cordial Silicon",
             Brand::Frostbite => "Frostbite",
         }
     }
@@ -56,7 +56,7 @@ impl Brand {
     /// and that is a hard requirement rather than a naming preference.** Flatpak
     /// exports only files whose names begin with the application id, so
     /// `io.github.luohoa97.Frostbite` could never be exported and would never
-    /// resolve for an installed build; `io.github.luohoa97.Cordial.Frostbite`
+    /// resolve for an installed build; `io.github.AxxzyWasTaken.CordialSilicon.Frostbite`
     /// is exported like any other of the app's own files.
     ///
     /// The application id itself does not change, on either day. It is the
@@ -69,8 +69,8 @@ impl Brand {
     /// watching for it, and a test asserts both files are present.
     pub fn icon(self) -> &'static str {
         match self {
-            Brand::Cordial => "io.github.luohoa97.Cordial",
-            Brand::Frostbite => "io.github.luohoa97.Cordial.Frostbite",
+            Brand::Cordial => "io.github.AxxzyWasTaken.CordialSilicon",
+            Brand::Frostbite => "io.github.AxxzyWasTaken.CordialSilicon.Frostbite",
         }
     }
 }

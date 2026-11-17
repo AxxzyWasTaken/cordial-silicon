@@ -1,8 +1,8 @@
 [Desktop Entry]
 Type=Application
-Name=Cordial
+Name=Cordial Silicon
 GenericName=Roblox Client
-Comment=Run Roblox on Linux
+Comment=Run Roblox on Apple Silicon Macs running Linux
 # cordial-shell, not cordial, and the shortening is the bug rather than the
 # tidy-up. Nothing is installed as plain `cordial`: the split app ships
 # /app/bin/cordial-shell beside /app/bin/cordial-run. flatpak-builder turns this
@@ -12,7 +12,7 @@ Comment=Run Roblox on Linux
 # The manifest's command: key does not rescue it — that applies to a bare
 # `flatpak run` with no desktop entry involved.
 Exec=cordial-shell %u
-Icon=io.github.luohoa97.Cordial
+Icon=io.github.AxxzyWasTaken.CordialSilicon
 Terminal=false
 Categories=Game;
 # Cordial handles Roblox's own links, which is how a Play button on the website

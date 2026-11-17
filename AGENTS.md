@@ -608,7 +608,7 @@ first launch moves an old build store from `$XDG_CACHE_HOME/cordial/builds`
 into `$XDG_DATA_HOME/cordial/builds` (ADR-054). On 2026-10-08 an agent that
 redirected only `XDG_DATA_HOME` had the host's real store moved into its scratch
 directory, then deleted it with the rest of its scratch. Redirect all three. And start the shell under its own `dbus-run-session`: it is a
-`GApplication` named `io.github.luohoa97.Cordial`, so a test shell left on the
+`GApplication` named `io.github.AxxzyWasTaken.CordialSilicon`, so a test shell left on the
 real session bus owns that name, and the user's own Cordial then hands its
 activation to it and exits in a tenth of a second -- on 2026-10-08 an agent's
 leftover shell, displaying into a nested sway nobody could see, made the

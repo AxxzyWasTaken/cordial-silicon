@@ -113,10 +113,10 @@ strip --strip-debug "$root/usr/bin/cordial-shell" "$root/usr/bin/cordial-run"
 # banner. Both of them: Frostbite is the twice-a-year name in
 # crates/cordial-shell/src/branding.rs, and a missing one is a blank icon in
 # the task switcher on the one day nobody is watching for it.
-install -Dm644 packaging/icons/hicolor/scalable/apps/io.github.luohoa97.Cordial.svg \
-    "$root/usr/share/icons/hicolor/scalable/apps/io.github.luohoa97.Cordial.svg"
-install -Dm644 packaging/icons/hicolor/scalable/apps/io.github.luohoa97.Cordial.Frostbite.svg \
-    "$root/usr/share/icons/hicolor/scalable/apps/io.github.luohoa97.Cordial.Frostbite.svg"
+install -Dm644 packaging/icons/hicolor/scalable/apps/io.github.AxxzyWasTaken.CordialSilicon.svg \
+    "$root/usr/share/icons/hicolor/scalable/apps/io.github.AxxzyWasTaken.CordialSilicon.svg"
+install -Dm644 packaging/icons/hicolor/scalable/apps/io.github.AxxzyWasTaken.CordialSilicon.Frostbite.svg \
+    "$root/usr/share/icons/hicolor/scalable/apps/io.github.AxxzyWasTaken.CordialSilicon.Frostbite.svg"
 
 # Exec=cordial-shell %u, and the %u is not decorative: the entry registers
 # x-scheme-handler/roblox-player, which is how a Play button on the website
@@ -130,10 +130,10 @@ for plugin in plugins/*/; do
     install -Dm644 "$plugin/plugin.json" "$root/usr/share/cordial/plugins/$id/plugin.json"
     install -Dm644 "$plugin/main.ts"     "$root/usr/share/cordial/plugins/$id/main.ts"
 done
-install -Dm644 packaging/io.github.luohoa97.Cordial.desktop \
-    "$root/usr/share/applications/io.github.luohoa97.Cordial.desktop"
-install -Dm644 packaging/io.github.luohoa97.Cordial.metainfo.xml \
-    "$root/usr/share/metainfo/io.github.luohoa97.Cordial.metainfo.xml"
+install -Dm644 packaging/io.github.AxxzyWasTaken.CordialSilicon.desktop \
+    "$root/usr/share/applications/io.github.AxxzyWasTaken.CordialSilicon.desktop"
+install -Dm644 packaging/io.github.AxxzyWasTaken.CordialSilicon.metainfo.xml \
+    "$root/usr/share/metainfo/io.github.AxxzyWasTaken.CordialSilicon.metainfo.xml"
 
 docdir="$root/usr/share/doc/cordial"
 install -Dm644 THIRD-PARTY-NOTICES.md "$docdir/THIRD-PARTY-NOTICES.md"

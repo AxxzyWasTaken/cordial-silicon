@@ -221,7 +221,7 @@
           # cfg'd out, the linker collects `webview::open`, and the binary
           # links no WebKitGTK at all — silently, the build still succeeds.
           # That exact shape shipped once in the Flatpak
-          # (packaging/io.github.luohoa97.Cordial.yml's own comment on this
+          # (packaging/io.github.AxxzyWasTaken.CordialSilicon.yml's own comment on this
           # line) and was reported as "webview doesnt work in cordial
           # flatpak". This package makes the same choice every other
           # packaging script here makes: build the full client, not the
@@ -254,7 +254,7 @@
           # Neither this nor the CMake build reach the network — no
           # `--share=network`-equivalent exists for a Nix build sandbox in
           # the first place, so there is nothing to disable here the way
-          # packaging/io.github.luohoa97.Cordial.yml's build-commands do
+          # packaging/io.github.AxxzyWasTaken.CordialSilicon.yml's build-commands do
           # deliberately for reproducibility. Worth restating anyway: Cordial
           # ships no Roblox code, this derivation fetches none, and nothing
           # here tries to.
@@ -344,19 +344,19 @@
               install -Dm644 "$plugin/main.ts" "$out/share/cordial/plugins/$id/main.ts"
             done
 
-            install -Dm644 packaging/icons/hicolor/scalable/apps/io.github.luohoa97.Cordial.svg \
-              "$out/share/icons/hicolor/scalable/apps/io.github.luohoa97.Cordial.svg"
+            install -Dm644 packaging/icons/hicolor/scalable/apps/io.github.AxxzyWasTaken.CordialSilicon.svg \
+              "$out/share/icons/hicolor/scalable/apps/io.github.AxxzyWasTaken.CordialSilicon.svg"
             # Frostbite, the twice-a-year joke in
             # crates/cordial-shell/src/branding.rs — installed unconditionally
             # for the same reason every other packaging script here installs
             # it unconditionally: the alternative is a name that resolves to
             # nothing on the one day nobody is watching for it.
-            install -Dm644 packaging/icons/hicolor/scalable/apps/io.github.luohoa97.Cordial.Frostbite.svg \
-              "$out/share/icons/hicolor/scalable/apps/io.github.luohoa97.Cordial.Frostbite.svg"
-            install -Dm644 packaging/io.github.luohoa97.Cordial.desktop \
-              "$out/share/applications/io.github.luohoa97.Cordial.desktop"
-            install -Dm644 packaging/io.github.luohoa97.Cordial.metainfo.xml \
-              "$out/share/metainfo/io.github.luohoa97.Cordial.metainfo.xml"
+            install -Dm644 packaging/icons/hicolor/scalable/apps/io.github.AxxzyWasTaken.CordialSilicon.Frostbite.svg \
+              "$out/share/icons/hicolor/scalable/apps/io.github.AxxzyWasTaken.CordialSilicon.Frostbite.svg"
+            install -Dm644 packaging/io.github.AxxzyWasTaken.CordialSilicon.desktop \
+              "$out/share/applications/io.github.AxxzyWasTaken.CordialSilicon.desktop"
+            install -Dm644 packaging/io.github.AxxzyWasTaken.CordialSilicon.metainfo.xml \
+              "$out/share/metainfo/io.github.AxxzyWasTaken.CordialSilicon.metainfo.xml"
 
             # Licence and attribution, travelling with the binary rather than
             # only with the source tree — MIT requires its notice in "all

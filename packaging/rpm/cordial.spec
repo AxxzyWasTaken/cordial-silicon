@@ -244,10 +244,10 @@ install -Dpm 0755 target/release/cordial-run   %{buildroot}%{_bindir}/cordial-ru
 # twice-a-year name in crates/cordial-shell/src/branding.rs, and a missing one
 # is a blank icon in the task switcher on the one day nobody is watching for it.
 # A test in that file asserts both exist and are square.
-install -Dpm 0644 packaging/icons/hicolor/scalable/apps/io.github.luohoa97.Cordial.svg \
-    %{buildroot}%{_datadir}/icons/hicolor/scalable/apps/io.github.luohoa97.Cordial.svg
-install -Dpm 0644 packaging/icons/hicolor/scalable/apps/io.github.luohoa97.Cordial.Frostbite.svg \
-    %{buildroot}%{_datadir}/icons/hicolor/scalable/apps/io.github.luohoa97.Cordial.Frostbite.svg
+install -Dpm 0644 packaging/icons/hicolor/scalable/apps/io.github.AxxzyWasTaken.CordialSilicon.svg \
+    %{buildroot}%{_datadir}/icons/hicolor/scalable/apps/io.github.AxxzyWasTaken.CordialSilicon.svg
+install -Dpm 0644 packaging/icons/hicolor/scalable/apps/io.github.AxxzyWasTaken.CordialSilicon.Frostbite.svg \
+    %{buildroot}%{_datadir}/icons/hicolor/scalable/apps/io.github.AxxzyWasTaken.CordialSilicon.Frostbite.svg
 
 # The first-party plugins, read-only beside the binary. `system_plugin_root()`
 # derives this path from the running executable, so `%{_datadir}` is what it
@@ -260,10 +260,10 @@ for plugin in plugins/*/; do
     install -Dpm 0644 "$plugin/plugin.json" %{buildroot}%{_datadir}/cordial/plugins/$id/plugin.json
     install -Dpm 0644 "$plugin/main.ts"     %{buildroot}%{_datadir}/cordial/plugins/$id/main.ts
 done
-install -Dpm 0644 packaging/io.github.luohoa97.Cordial.desktop \
-    %{buildroot}%{_datadir}/applications/io.github.luohoa97.Cordial.desktop
-install -Dpm 0644 packaging/io.github.luohoa97.Cordial.metainfo.xml \
-    %{buildroot}%{_datadir}/metainfo/io.github.luohoa97.Cordial.metainfo.xml
+install -Dpm 0644 packaging/io.github.AxxzyWasTaken.CordialSilicon.desktop \
+    %{buildroot}%{_datadir}/applications/io.github.AxxzyWasTaken.CordialSilicon.desktop
+install -Dpm 0644 packaging/io.github.AxxzyWasTaken.CordialSilicon.metainfo.xml \
+    %{buildroot}%{_datadir}/metainfo/io.github.AxxzyWasTaken.CordialSilicon.metainfo.xml
 
 # MIT requires its notice in "all copies or substantial portions" and
 # Apache-2.0 section 4(d) requires NOTICE to travel with derivative works. Both
@@ -312,9 +312,9 @@ export CC=clang CXX=clang++
 # package was caught shipping a feature-less binary by it.
 readelf -d %{buildroot}%{_bindir}/cordial-run | grep -qi webkit
 
-desktop-file-validate %{buildroot}%{_datadir}/applications/io.github.luohoa97.Cordial.desktop
+desktop-file-validate %{buildroot}%{_datadir}/applications/io.github.AxxzyWasTaken.CordialSilicon.desktop
 appstream-util validate-relax --nonet \
-    %{buildroot}%{_datadir}/metainfo/io.github.luohoa97.Cordial.metainfo.xml
+    %{buildroot}%{_datadir}/metainfo/io.github.AxxzyWasTaken.CordialSilicon.metainfo.xml
 
 # The same feature pair as %%build, and leaving it off is not a tidy-up:
 # `cargo test` with a different feature resolution rebuilds cordial-run and
@@ -372,10 +372,10 @@ appstream-util validate-relax --nonet \
 %{_bindir}/cordial-shell
 %{_bindir}/cordial
 %{_bindir}/cordial-run
-%{_datadir}/applications/io.github.luohoa97.Cordial.desktop
-%{_datadir}/metainfo/io.github.luohoa97.Cordial.metainfo.xml
-%{_datadir}/icons/hicolor/scalable/apps/io.github.luohoa97.Cordial.svg
-%{_datadir}/icons/hicolor/scalable/apps/io.github.luohoa97.Cordial.Frostbite.svg
+%{_datadir}/applications/io.github.AxxzyWasTaken.CordialSilicon.desktop
+%{_datadir}/metainfo/io.github.AxxzyWasTaken.CordialSilicon.metainfo.xml
+%{_datadir}/icons/hicolor/scalable/apps/io.github.AxxzyWasTaken.CordialSilicon.svg
+%{_datadir}/icons/hicolor/scalable/apps/io.github.AxxzyWasTaken.CordialSilicon.Frostbite.svg
 
 %changelog
 * Sat Aug 22 2026 luohoa97 <luohoa97@users.noreply.github.com> - 0.6.0-1.108.20260822git9d9c980

@@ -402,8 +402,8 @@ icons:
     # a name that resolves to nothing gives a blank window in the switcher.
     dest="${XDG_DATA_HOME:-$HOME/.local/share}/icons/hicolor/scalable/apps"
     mkdir -p "$dest"
-    cp packaging/icons/hicolor/scalable/apps/io.github.luohoa97.Cordial.svg "$dest/"
-    cp packaging/icons/hicolor/scalable/apps/io.github.luohoa97.Cordial.Frostbite.svg "$dest/"
+    cp packaging/icons/hicolor/scalable/apps/io.github.AxxzyWasTaken.CordialSilicon.svg "$dest/"
+    cp packaging/icons/hicolor/scalable/apps/io.github.AxxzyWasTaken.CordialSilicon.Frostbite.svg "$dest/"
     # Harmless if absent, and GTK re-reads scalable icons without it anyway.
     gtk-update-icon-cache -q -t -f "$(dirname "$(dirname "$dest")")" 2>/dev/null || true
     echo "installed both icons into $dest"

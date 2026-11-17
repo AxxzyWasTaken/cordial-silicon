@@ -6,7 +6,7 @@
 pick the template that matches. Every one of them asks for the same
 **Diagnostics** block — get it from **Report a Problem** in
 Cordial's main menu, or run `cordial --diagnostics` (`cordial-shell --diagnostics` from a
-checkout, or `flatpak run io.github.luohoa97.Cordial --diagnostics` under
+checkout, or `flatpak run io.github.AxxzyWasTaken.CordialSilicon --diagnostics` under
 Flatpak). It carries the Cordial and Roblox build, your kernel and
 distribution, and how Cordial was installed — no account, no token, no
 profile name, and nothing from your home directory. It is shown on screen

@@ -7,7 +7,7 @@
   "path_gameroot": "/usr/bin",
   "runtime": "",
   "exec": "flatpak",
-  "args": "run --command=cordial io.github.luohoa97.Cordial --profile $PROFILE --play --fullscreen",
+  "args": "run --command=cordial io.github.AxxzyWasTaken.CordialSilicon --profile $PROFILE --play --fullscreen",
   "env": "",
   "sdl2_override": "No",
   "pause_between_starts": 3.0,

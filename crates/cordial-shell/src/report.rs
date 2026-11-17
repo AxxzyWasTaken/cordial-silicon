@@ -24,7 +24,7 @@ use std::rc::Rc;
 
 /// Where a report goes. One constant, because the row here and the About
 /// dialog's link both name it and two copies drift.
-pub const ISSUES_URL: &str = "https://github.com/luohoa97/cordial/issues/new/choose";
+pub const ISSUES_URL: &str = "https://github.com/AxxzyWasTaken/cordial-silicon/issues/new";
 
 /// Where "Open an issue" goes, and a note when that is not obvious.
 ///
