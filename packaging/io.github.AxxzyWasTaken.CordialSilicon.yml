@@ -345,6 +345,86 @@ modules:
       - type: archive
         url: https://github.com/KhronosGroup/OpenXR-SDK/archive/refs/tags/release-1.1.47.tar.gz
         sha256: 82c7f4e3658578a22e438b5f005ecaf22c3f724b09fe031fa0f8ffc97c30c9ba
+  # Cordial Silicon: the post-processing and overlay layers, built into the app.
+  # Flathub's org.freedesktop.Platform.VulkanLayer.vkBasalt and .MangoHud
+  # extensions exist only for x86_64, so on an Apple Silicon Mac the vkBasalt and
+  # MangoHUD switches had nothing to load. The loader finds both through
+  # /app/share/vulkan/implicit_layer.d, and each stays inert unless Cordial sets
+  # its enable variable (ENABLE_VKBASALT / MANGOHUD).
+  - name: spirv-headers
+    buildsystem: cmake-ninja
+    config-opts:
+      - -DSPIRV_HEADERS_ENABLE_TESTS=OFF
+    cleanup:
+      - '*'
+    sources:
+      - type: git
+        url: https://github.com/KhronosGroup/SPIRV-Headers
+        commit: 5c6004e758e0c80185ef2cee93ae5c10fa342a5b
+  - name: vkbasalt
+    buildsystem: meson
+    config-opts:
+      - --buildtype=release
+    post-install:
+      - install -Dm644 ${FLATPAK_BUILDER_BUILDDIR}/LICENSE /app/share/licenses/cordial/vkBasalt-Zlib.txt
+    sources:
+      - type: git
+        url: https://github.com/DadSchoorse/vkBasalt
+        commit: 4f97f09ffe91900e6ca136cc26cf7966f8f6970d
+  - name: mangohud
+    buildsystem: meson
+    config-opts:
+      - --buildtype=release
+      - -Dwith_nvml=disabled
+      - -Dwith_xnvctrl=disabled
+      - -Dmangoplot=disabled
+      - -Dtests=disabled
+      - -Dinclude_doc=false
+      - -Ddynamic_string_tokens=false
+      - --wrap-mode=nodownload
+    post-install:
+      - install -Dm644 ${FLATPAK_BUILDER_BUILDDIR}/LICENSE /app/share/licenses/cordial/MangoHud-MIT.txt
+    cleanup:
+      - /bin
+    sources:
+      - type: git
+        url: https://github.com/flightlessmango/MangoHud
+        commit: 992103e4fb744897826de04ea00a2f71e7018214
+      - type: file
+        url: https://github.com/ocornut/imgui/archive/refs/tags/v1.91.6.tar.gz
+        sha256: c5fbc5dcab1d46064001c3b84d7a88812985cde7e0e9ced03f5677bec1ba502a
+        dest: subprojects/packagecache
+        dest-filename: imgui-1.91.6.tar.gz
+      - type: file
+        url: https://github.com/epezent/implot/archive/refs/tags/v0.16.zip
+        sha256: 24f772c688f6b8a6e19d7efc10e4923a04a915f13d487b08b83553aa62ae1708
+        dest: subprojects/packagecache
+        dest-filename: implot-0.16.zip
+      - type: file
+        url: https://wrapdb.mesonbuild.com/v2/implot_0.16-1/get_patch
+        sha256: 1c6b1462066a5452fa50c1da1dd47fed841f28232972c82d778f2962936568c7
+        dest: subprojects/packagecache
+        dest-filename: implot_0.16-1_patch.zip
+      - type: file
+        url: https://github.com/gabime/spdlog/archive/refs/tags/v1.14.1.tar.gz
+        sha256: 1586508029a7d0670dfcb2d97575dcdc242d3868a259742b69f100801ab4e16b
+        dest: subprojects/packagecache
+        dest-filename: spdlog-1.14.1.tar.gz
+      - type: file
+        url: https://wrapdb.mesonbuild.com/v2/spdlog_1.14.1-1/get_patch
+        sha256: ae878e732330ea1048f90d7e117c40c0cd2a6fb8ae5492c7955818ce3aaade6c
+        dest: subprojects/packagecache
+        dest-filename: spdlog_1.14.1-1_patch.zip
+      - type: file
+        url: https://github.com/KhronosGroup/Vulkan-Headers/archive/v1.4.346.tar.gz
+        sha256: 5bb77f5d7b460e255a9e51affc00d64354986b55cf577d8eab28529cad01fc80
+        dest: subprojects/packagecache
+        dest-filename: vulkan-headers-1.4.346.tar.gz
+      - type: file
+        url: https://github.com/KhronosGroup/Vulkan-Utility-Libraries/archive/v1.4.346.tar.gz
+        sha256: 372eb525103ecb4e3a04d030b2a9778ebc67853bbdc82ce6747de3757d432ad9
+        dest: subprojects/packagecache
+        dest-filename: vulkan-utility-libraries-1.4.346.tar.gz
   - name: cordial
     buildsystem: simple
     build-options:
