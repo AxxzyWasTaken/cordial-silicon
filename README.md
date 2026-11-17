@@ -2,6 +2,36 @@
   <img src="https://raw.githubusercontent.com/luohoa97/cordial/main/packaging/banner.svg" alt="Cordial" width="460">
 </p>
 
+# Cordial Silicon
+
+A fork of [Cordial](https://github.com/luohoa97/cordial) by luohoa97, tuned for
+Apple Silicon Macs running Linux (Asahi-style setups). Everything below the
+"Cordial Silicon" section is upstream's README and still applies.
+GPL-3.0-or-later, like upstream.
+
+## What Cordial Silicon changes
+
+- **Its own app ID**, `io.github.AxxzyWasTaken.CordialSilicon`, so it installs
+  beside upstream Cordial instead of replacing it.
+- **vkBasalt and MangoHud built in.** Flathub only ships those Vulkan layers
+  for x86_64, so on an Apple Silicon Mac Cordial's vkBasalt and MangoHUD
+  switches had nothing to load. Both are built into the Flatpak here.
+- **Defaults picked for a MacBook:**
+  - Graphics: Vulkan.
+  - Frame pacing: FIFO with a new **117 fps** frame rate limit, the default.
+    Just under a 120 Hz ProMotion panel's top, variable refresh shows every
+    frame for the same time instead of FIFO juddering at the ceiling.
+  - 4x MSAA forced on (`FIntDebugForceMSAASamples=4`). Apple GPUs resolve MSAA
+    in tile memory, so it costs little.
+  - vkBasalt on, sharpening only (CAS 0.4). SMAA on top of MSAA would blur the
+    picture again.
+  - Close on leave and carrying the launch ticket on.
+
+Issues with these changes belong here, not upstream. Anything that also
+happens in upstream Cordial belongs [upstream](https://github.com/luohoa97/cordial/issues).
+
+---
+
 # Cordial
 
 Runs Roblox's official Android build natively on Linux, with no emulator,
