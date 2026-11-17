@@ -13,6 +13,9 @@ GPL-3.0-or-later, like upstream.
 
 - **Its own app ID**, `io.github.AxxzyWasTaken.CordialSilicon`, so it installs
   beside upstream Cordial instead of replacing it.
+- **HiDPI on Wayland.** The game renders at the output's scale (every pixel of
+  a Retina panel) instead of being stretched from half size, with the
+  interface kept at its normal size. `CORDIAL_BUFFER_SCALE=1` turns it off.
 - **vkBasalt and MangoHud built in.** Flathub only ships those Vulkan layers
   for x86_64, so on an Apple Silicon Mac Cordial's vkBasalt and MangoHUD
   switches had nothing to load. Both are built into the Flatpak here.
