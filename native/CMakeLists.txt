@@ -391,6 +391,12 @@ target_link_libraries(cordial_jni_shim PUBLIC jnivm)
 add_executable(cordial_permissions_transport_test EXCLUDE_FROM_ALL
   permissions_transport.cpp permissions_transport_test.cpp)
 target_compile_options(cordial_permissions_transport_test PRIVATE -UNDEBUG)
+# Cordial Silicon: on Apple M4 (FEAT_BTI) this test dies with SIGILL when built
+# with the GNOME SDK's -mbranch-protection=bti+pac-ret, and passes without it.
+# Build the test without branch protection so it still runs at build time.
+if(CMAKE_SYSTEM_PROCESSOR MATCHES "aarch64|arm64")
+  target_compile_options(cordial_permissions_transport_test PRIVATE -mbranch-protection=none)
+endif()
 target_include_directories(cordial_permissions_transport_test PRIVATE
   ${CMAKE_CURRENT_SOURCE_DIR}/../third_party/libjnivm/include)
 add_custom_command(TARGET cordial_permissions_transport_test POST_BUILD
