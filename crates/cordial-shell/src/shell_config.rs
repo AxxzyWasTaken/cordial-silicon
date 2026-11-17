@@ -364,7 +364,7 @@ pub enum PresentMode {
 
 impl Default for PresentMode {
     fn default() -> Self {
-        PresentMode::Mailbox
+        PresentMode::Fifo
     }
 }
 
@@ -941,20 +941,20 @@ impl Default for ShellConfig {
             gamemode: true,
             throttle: ThrottleWhen::default(),
             pointer_acceleration: PointerAcceleration::default(),
-            graphics: "automatic".to_string(),
+            graphics: "vulkan".to_string(),
             graphics_optimization_mode: GraphicsOptimization::default(),
             present_mode: PresentMode::default(),
             frame_rate_limit: FrameRateLimit::default(),
             gamepad: true,
             record_session: false,
             record_audio: false,
-            close_on_leave: false,
+            close_on_leave: true,
             unpacked_plugins: Vec::new(),
-            carry_launch_ticket: false,
+            carry_launch_ticket: true,
             audio_output: AudioOutput::default(),
             audio_input: AudioInput::default(),
             mangohud: false,
-            vkbasalt: false,
+            vkbasalt: true,
             fullscreen_accel: default_fullscreen_accel(),
             marketplace_index_dir: None,
             vr_openxr_runtime: None,
@@ -1213,7 +1213,7 @@ mod tests {
         // applies to them: everybody's shell.json predates them.
         assert!(config.gamemode, "an older config must still get GameMode's default");
         assert!(!config.mangohud);
-        assert!(!config.vkbasalt, "vkbasalt is newer still and every existing shell.json predates it");
+        assert!(config.vkbasalt, "Cordial Silicon ships vkBasalt and turns it on by default");
     }
 
     #[test]
@@ -1464,9 +1464,11 @@ mod tests {
     /// back to FIFO should have a power measurement in hand, because the
     /// latency side of this trade now has one and the power side does not.
     #[test]
-    fn a_fresh_install_is_responsive_rather_than_frugal() {
-        assert_eq!(ShellConfig::default().present_mode, PresentMode::Mailbox);
-        assert_eq!(PresentMode::default().as_env(), Some("mailbox"));
+    fn a_fresh_install_is_paced_for_vrr() {
+        // Cordial Silicon: FIFO under a 117 fps cap, so a 120 Hz ProMotion panel's
+        // variable refresh shows every frame for the same time.
+        assert_eq!(ShellConfig::default().present_mode, PresentMode::Fifo);
+        assert_eq!(PresentMode::default().as_env(), Some("fifo"));
     }
 
     /// Automatic must send nothing, or ADR-020's plugin path is unreachable.
@@ -1508,15 +1510,15 @@ mod tests {
     fn an_older_config_without_the_key_keeps_the_feel_it_had() {
         let older = r#"{"gamemode":true,"graphics":"automatic","mangohud":false}"#;
         let parsed: ShellConfig = serde_json::from_str(older).expect("an older shell.json must load");
-        assert_eq!(parsed.present_mode, PresentMode::Mailbox);
+        assert_eq!(parsed.present_mode, PresentMode::Fifo);
     }
 
     /// A fresh install sends nothing extra: the frame rate stays at the
     /// engine's own default, which is what every Cordial before this row did.
     #[test]
-    fn a_fresh_install_does_not_raise_the_frame_rate_cap() {
-        assert_eq!(ShellConfig::default().frame_rate_limit, FrameRateLimit::Display);
-        assert_eq!(FrameRateLimit::default().as_env(), "display");
+    fn a_fresh_install_caps_just_under_the_panel() {
+        assert_eq!(ShellConfig::default().frame_rate_limit, FrameRateLimit::Cap117);
+        assert_eq!(FrameRateLimit::default().as_env(), "117");
     }
 
     /// The words on the wire and in `CORDIAL_FRAME_RATE_LIMIT`. This cannot
@@ -1550,8 +1552,8 @@ mod tests {
         for mode in FrameRateLimit::ALL {
             assert_eq!(FrameRateLimit::from_index(mode.index()), mode);
         }
-        assert_eq!(FrameRateLimit::from_index(0), FrameRateLimit::Display, "Display is first and the default");
-        assert_eq!(FrameRateLimit::from_index(99), FrameRateLimit::Display, "out of range is the default");
+        assert_eq!(FrameRateLimit::from_index(0), FrameRateLimit::Display, "Display is first");
+        assert_eq!(FrameRateLimit::from_index(99), FrameRateLimit::Cap117, "out of range is the default");
     }
 
     /// A `shell.json` from before this row existed must still load, and must

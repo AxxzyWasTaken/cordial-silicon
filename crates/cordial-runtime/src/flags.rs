@@ -485,7 +485,9 @@ fn data_dir() -> PathBuf {
 /// instrument; until somebody stands in it and reads YES, this entry is a
 /// reasoned guess and the paragraph above about measured-not-inferred applies
 /// to it as much as to anything else.
-const BUILTIN: &[(&str, &str)] = &[("FFlagUserLaunchedWithBloxstrap", "True")];
+// Cordial Silicon: 4x MSAA. Apple GPUs resolve it in tile memory, so it costs little.
+const BUILTIN: &[(&str, &str)] =
+    &[("FFlagUserLaunchedWithBloxstrap", "True"), ("FIntDebugForceMSAASamples", "4")];
 
 /// How hard to push the engine's own worker pools, as a choice rather than a
 /// default.

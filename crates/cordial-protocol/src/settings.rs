@@ -155,9 +155,12 @@ impl TitleBar {
 pub enum FrameRateLimit {
     /// Sets nothing. The engine's own default, and what every Cordial before
     /// this row shipped.
-    #[default]
     Display,
     Cap90,
+    /// Cordial Silicon: just under a 120 Hz ProMotion panel's top, so variable
+    /// refresh paces every frame instead of FIFO judder at the ceiling.
+    #[default]
+    Cap117,
     Cap120,
     Cap144,
     Cap165,
@@ -171,9 +174,10 @@ pub enum FrameRateLimit {
 }
 
 impl FrameRateLimit {
-    pub const ALL: [FrameRateLimit; 8] = [
+    pub const ALL: [FrameRateLimit; 9] = [
         FrameRateLimit::Display,
         FrameRateLimit::Cap90,
+        FrameRateLimit::Cap117,
         FrameRateLimit::Cap120,
         FrameRateLimit::Cap144,
         FrameRateLimit::Cap165,
@@ -199,6 +203,7 @@ impl FrameRateLimit {
         match self {
             FrameRateLimit::Display => "display",
             FrameRateLimit::Cap90 => "90",
+            FrameRateLimit::Cap117 => "117",
             FrameRateLimit::Cap120 => "120",
             FrameRateLimit::Cap144 => "144",
             FrameRateLimit::Cap165 => "165",
@@ -216,6 +221,7 @@ impl FrameRateLimit {
         match self {
             FrameRateLimit::Display => "Display refresh",
             FrameRateLimit::Cap90 => "90 fps",
+            FrameRateLimit::Cap117 => "117 fps (smooth on 120 Hz VRR)",
             FrameRateLimit::Cap120 => "120 fps",
             FrameRateLimit::Cap144 => "144 fps",
             FrameRateLimit::Cap165 => "165 fps",

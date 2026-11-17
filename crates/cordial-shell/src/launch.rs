@@ -1077,7 +1077,9 @@ fn vkbasalt_config_template() -> String {
          # through the window, so it does nothing on Cordial's default Wayland\n\
          # backend with no XWayland running. See docs/shaders.md.\n\
          \n\
-         effects = cas:smaa\n\
+         # Cordial Silicon: sharpening only. Roblox already gets 4x MSAA, and SMAA\n\
+         # on top would blur the picture again. Add :smaa back if you turn MSAA off.\n\
+         effects = cas\n\
          \n\
          toggleKey = {VKBASALT_TOGGLE_KEY}\n\
          enableOnLaunch = True\n\
@@ -1563,7 +1565,7 @@ mod tests {
 
         ensure_vkbasalt_config(&path).expect("first write succeeds");
         let generated = std::fs::read_to_string(&path).unwrap();
-        assert!(generated.contains("effects = cas:smaa"));
+        assert!(generated.contains("effects = cas\n"));
         assert!(generated.contains(VKBASALT_TOGGLE_KEY));
 
         std::fs::write(&path, "# a user's own config\neffects = fxaa\n").unwrap();
