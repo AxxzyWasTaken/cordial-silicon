@@ -219,6 +219,24 @@ impl Instance {
 /// message and the lines that led to it are both on stderr.
 /// Local wall-clock to the millisecond, in the same shape `native/liblog.cpp`
 /// uses, so a reader can sort both together.
+/// The largest integer scale of any connected monitor, 1 when GDK has no
+/// display. The largest rather than the launcher's own monitor's because the
+/// game window can be moved or sent fullscreen elsewhere; on a mixed setup the
+/// lower-scale outputs are supersampled, which costs frame rate but never
+/// sharpness.
+fn output_scale() -> i32 {
+    use gtk4::prelude::*;
+    let Some(display) = gtk4::gdk::Display::default() else { return 1 };
+    let monitors = display.monitors();
+    (0..monitors.n_items())
+        .filter_map(|i| monitors.item(i))
+        .filter_map(|m| m.downcast::<gtk4::gdk::Monitor>().ok())
+        .map(|m| m.scale_factor())
+        .max()
+        .unwrap_or(1)
+        .clamp(1, 4)
+}
+
 fn stamp() -> String {
     let now = std::time::SystemTime::now()
         .duration_since(std::time::UNIX_EPOCH)
@@ -442,6 +460,15 @@ pub fn spawn(
     // install does.
     command.env("CORDIAL_THROTTLE", config.throttle.as_str());
     command.env("CORDIAL_POINTER_ACCEL", config.pointer_acceleration.as_str());
+
+    // The output scale, for HiDPI. The client cannot ask the display itself in
+    // time: the engine reads its density once, inside `initializeNativeCode`,
+    // before the client has a window or a GDK display to ask. The launcher
+    // already has both. Left alone when the user set it, so
+    // `CORDIAL_BUFFER_SCALE=1` still turns HiDPI off.
+    if std::env::var_os("CORDIAL_BUFFER_SCALE").is_none() {
+        command.env("CORDIAL_BUFFER_SCALE", output_scale().to_string());
+    }
 
     // The Graphics row, and **only when it is not Automatic**. That is not a
     // micro-optimisation: an absent variable is what tells the runtime the user

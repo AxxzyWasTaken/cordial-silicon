@@ -2044,6 +2044,21 @@ impl HostWindow {
         (w > 0 && h > 0).then_some((w, h))
     }
 
+    /// The integer scale GDK renders this window at -- 2 on a scale-2 output,
+    /// and the next integer up on a fractional one, which is what GDK itself
+    /// rounds to for its own buffers.
+    ///
+    /// The larger of the surface's own factor and its monitor's. Right after
+    /// mapping, a compositor may not yet have told GDK which output the surface
+    /// entered, and the surface then still reports 1 while the monitor already
+    /// knows better.
+    pub fn buffer_scale(&self) -> i32 {
+        let Some(surface) = self.window.surface() else { return 1 };
+        let display = WidgetExt::display(&self.window);
+        let monitor = display.monitor_at_surface(&surface).map_or(1, |m| m.scale_factor());
+        surface.scale_factor().max(monitor).max(1)
+    }
+
     pub fn content_rect(&self) -> Option<(i32, i32, i32, i32)> {
         let bounds = self.content.compute_bounds(&self.window)?;
         let (dx, dy) = self.window.surface_transform();

@@ -115,6 +115,24 @@ void set_display_size(int width, int height) {
     g_height = height;
 }
 
+/// Engine pixels per window pixel: the Wayland canvas's buffer scale. The size
+/// above is in engine pixels; `PlatformParams` divides by this wherever it
+/// means the window's own size rather than the pixel count.
+///
+/// Starts from `CORDIAL_BUFFER_SCALE`, which the launcher sets to the output's
+/// scale, because `DisplayMetrics` is read once inside `initializeNativeCode` --
+/// before the window whose scale `set_display_scale` later confirms exists.
+static int initial_display_scale() {
+    const char* v = getenv("CORDIAL_BUFFER_SCALE");
+    int scale = (v && *v) ? atoi(v) : 1;
+    return (scale >= 1 && scale <= 4) ? scale : 1;
+}
+static int g_display_scale = initial_display_scale();
+
+void set_display_scale(int scale) {
+    g_display_scale = scale;
+}
+
 /// The display's physical size in millimetres, or zero for "nobody knows".
 ///
 /// Zero is a real state and not a placeholder: a compositor is entitled to
@@ -561,9 +579,21 @@ public:
         p->heightPixels = height;
         // 1.0 means "one density-independent pixel is one real pixel", which is
         // what a desktop window wants: no scaling, no phone-sized controls.
-        p->density = 1.0f;
-        p->scaledDensity = 1.0f;
-        p->densityDpi = 160;
+        // On a HiDPI canvas a window pixel is `g_display_scale` engine pixels,
+        // and the density says so, so a dp stays one window pixel.
+        // `CORDIAL_DENSITY` overrides it, for measuring.
+        float density = static_cast<float>(g_display_scale);
+        if (const char* v = getenv("CORDIAL_DENSITY"); v && *v) {
+            float parsed = strtof(v, nullptr);
+            if (parsed > 0.0f && parsed <= 8.0f) {
+                density = parsed;
+            }
+        }
+        p->density = density;
+        p->scaledDensity = density;
+        p->densityDpi = static_cast<jint>(160.0f * density);
+        p->xdpi = 96.0f * density;
+        p->ydpi = 96.0f * density;
         to_jni(env, p);
         return p;
     }
@@ -1743,13 +1773,18 @@ public:
                             " using 1.0\n", v);
                 }
             }
-            p->dpiScale = scale;
+            // On a HiDPI canvas the engine draws `g_display_scale` pixels per
+            // window pixel; the same factor here keeps every control the size
+            // it was, now drawn with the extra pixels instead of shrunk into
+            // them.
+            p->dpiScale = scale * static_cast<float>(g_display_scale);
         }
         // Physical size at roughly 96 DPI, which is what a desktop display is.
         // A phone's 400+ DPI here would make the engine scale its UI for a
-        // screen held at arm's length.
-        p->viewportWidthMm = static_cast<jint>(width * 25.4 / 96.0);
-        p->viewportHeightMm = static_cast<jint>(height * 25.4 / 96.0);
+        // screen held at arm's length. 96 dots per *window* pixel: `width` and
+        // `height` are engine pixels, `g_display_scale` of them to each one.
+        p->viewportWidthMm = static_cast<jint>(width / g_display_scale * 25.4 / 96.0);
+        p->viewportHeightMm = static_cast<jint>(height / g_display_scale * 25.4 / 96.0);
         to_jni(env, p);
         return p;
     }
@@ -2856,6 +2891,12 @@ jint ui_mode_night_bits() {
 extern "C" void cordial_set_display_size(int width, int height) {
     if (width > 0 && height > 0) {
         cordial::set_display_size(width, height);
+    }
+}
+
+extern "C" void cordial_set_display_scale(int scale) {
+    if (scale >= 1 && scale <= 4) {
+        cordial::set_display_scale(scale);
     }
 }
 

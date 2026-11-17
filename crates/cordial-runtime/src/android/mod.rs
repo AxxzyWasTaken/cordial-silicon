@@ -170,6 +170,15 @@ impl WindowHandle {
             WindowHandle::Wayland(w) => w.geometry(),
         }
     }
+
+    /// Engine pixels per window pixel: the Wayland canvas's buffer scale, and
+    /// always 1 on X11, which has no such thing.
+    pub fn buffer_scale(&self) -> i32 {
+        match self {
+            WindowHandle::X11(_) => 1,
+            WindowHandle::Wayland(w) => w.buffer_scale(),
+        }
+    }
 }
 
 /// Open the host window on whichever backend [`backend()`] selected.
@@ -180,8 +189,9 @@ pub fn open_window(width: u32, height: u32, title: &str) -> Result<WindowHandle,
     }
 }
 
-/// The canvas in pixels, whichever backend is open, and `(0, 0)` before there
-/// is one.
+/// The canvas in the engine's input units, whichever backend is open, and
+/// `(0, 0)` before there is one. On a HiDPI Wayland canvas that is smaller than
+/// the render size; see `WaylandWindow::input_size`.
 ///
 /// `nativePassInput` takes the surface size as two of its six arguments, and a
 /// scripted touch has no `wl_touch` event to read it off the way
@@ -189,11 +199,11 @@ pub fn open_window(width: u32, height: u32, title: &str) -> Result<WindowHandle,
 /// like: it is also a handle of 0, so nothing reaches the engine on that path
 /// anyway and there is no wrong size to be believed.
 pub fn canvas_size() -> (i32, i32) {
-    let g = match backend() {
-        Backend::Wayland => wayland::current().map(|w| w.geometry()),
-        Backend::X11 => window::current().map(|w| w.geometry()),
-    };
-    g.map(|(w, h, _)| (w, h)).unwrap_or((0, 0))
+    match backend() {
+        Backend::Wayland => wayland::current().map(|w| w.input_size()),
+        Backend::X11 => window::current().map(|w| w.geometry()).map(|(w, h, _)| (w, h)),
+    }
+    .unwrap_or((0, 0))
 }
 
 /// The active backend's input connection descriptor, for the looper to watch

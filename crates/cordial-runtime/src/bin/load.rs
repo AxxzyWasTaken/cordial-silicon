@@ -3001,8 +3001,18 @@ fn main() -> ExitCode {
                                     }
                                     Ok(w) => {
                                         let (width, height, format) = w.geometry();
-                                        cordial_runtime::android::config::set_screen(width, height);
-                                        println!("  window {width}x{height}");
+                                        // `geometry` is engine pixels; the
+                                        // screen is reported in dp, which at
+                                        // density 1.0 is window pixels.
+                                        let scale = w.buffer_scale();
+                                        cordial_runtime::android::config::set_screen(width / scale, height / scale);
+                                        println!("  window {width}x{height} (buffer scale {scale})");
+                                        // Before anything builds a
+                                        // `PlatformParams`: its `dpiScale` is
+                                        // what the engine lays its interface
+                                        // out with, and it has to grow with
+                                        // the pixels or every control shrinks.
+                                        linker::game_activity::set_display_scale(scale);
 
                                         // Everything from here on calls into
                                         // the engine on the assumption it

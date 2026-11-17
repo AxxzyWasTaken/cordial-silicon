@@ -632,6 +632,7 @@ pub mod game_activity {
             n: usize,
         ) -> c_int;
         fn cordial_set_display_size(width: c_int, height: c_int);
+        fn cordial_set_display_scale(scale: c_int);
         fn cordial_set_display_physical_mm(width_mm: c_int, height_mm: c_int);
         fn cordial_set_ui_mode_night(night: c_int);
         fn cordial_get_fint(
@@ -1900,6 +1901,14 @@ pub mod game_activity {
         // SAFETY: writes two ints behind a mutex-free but single-threaded
         // startup path, the same one `set_init_params` already runs on.
         unsafe { cordial_set_display_size(width as c_int, height as c_int) }
+    }
+
+    /// Engine pixels per window pixel (the Wayland canvas's buffer scale), so
+    /// `PlatformParams.dpiScale` can grow with the pixel count and the
+    /// interface keeps its size. 1 leaves everything as it was.
+    pub fn set_display_scale(scale: i32) {
+        // SAFETY: stores one int, on the same startup path as `set_display_size`.
+        unsafe { cordial_set_display_scale(scale as c_int) }
     }
 
     /// The display's physical size in millimetres, for
